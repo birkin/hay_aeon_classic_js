@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import os, re, time, unittest, urlparse
+import os, re, time, unittest, urllib
+# from urllib.parse import urlparse
 from selenium import webdriver
 
 

@@ -11,8 +11,7 @@ class JCBlinkTest( unittest.TestCase ):
 
     def setUp(self):
         self.driver = None
-        # driver_type = unicode( os.environ.get('JCBLINK_TESTS__DRIVER_TYPE') )
-        driver_type = 'firefox'
+        driver_type = os.environ.get( 'JCBLINK_TESTS__DRIVER_TYPE', 'firefox' )
         if driver_type == 'firefox':
             self.driver = webdriver.Firefox()
         else:

@@ -1,12 +1,12 @@
-console.log( "- jcb_link.js START" );
+console.log( "- hay_link.js START" );
 
 
-var jcblink_flow_manager = new function() {
+var haylink_flow_manager = new function() {
   /* Namespaces function calls.
    *
    * See <http://stackoverflow.com/a/881611> for module-pattern reference.
    * Minimizes chances that a function here will interfere with a similarly-named function in another imported js file.
-   * Only check_already_run() can be called publicly, and only via ```jcblink_flow_manager.check_already_run();```.
+   * Only check_already_run() can be called publicly, and only via ```haylink_flow_manager.check_already_run();```.
    *
    * Controller class flow description:
    * - Determines page-type. If bib page...
@@ -16,11 +16,10 @@ var jcblink_flow_manager = new function() {
    *   - Displays Aeon link
    *
    * Reference Josiah pages:
-   * - `JCB`: <http://josiah.brown.edu/record=b3902979>
-   * - `JCB REF`: <http://josiah.brown.edu/record=b6344512>
-   * - `JCB VISUAL MATERIALS`: <http://josiah.brown.edu/record=b5660654>
-   * - `JCB - multiple copies`: <http://josiah.brown.edu/record=b2223864>
-   * - Very-long-title handling: <http://josiah.brown.edu/record=b5713050>
+   * - `ANNEX HAY` - regular: <http://josiah.brown.edu/record=b7621213>
+   * - `ANNEX HAY` - multiple 'ANNEX HAY' copies: <http://josiah.brown.edu/record=b2223864>
+   * - `ANNEX HAY` - multiple copies, mixture of 'ANNEX HAY' and 'ROCK': <http://josiah.brown.edu/record=b1346992>
+   * - `ANNEX HAY` - very-long-title handling: <http://josiah.brown.edu/record=b1863472>
    */
 
   /* set globals, essentially class attributes */
@@ -33,7 +32,7 @@ var jcblink_flow_manager = new function() {
   var digital_version_url = "";
   var bib_items_entry_rows = null;
   var bib_items_entry_row = null;
-  // var aeon_root_url = "https://jcbl.aeon.atlas-sys.com/aeon.dll?Action=10&Form=30";
+  // var aeon_root_url = "https://hayl.aeon.atlas-sys.com/aeon.dll?Action=10&Form=30";
   var full_aeon_url = "";
 
   this.check_already_run = function() {
@@ -41,13 +40,12 @@ var jcblink_flow_manager = new function() {
      * Called by document.ready()
      */
     all_html = $("body").html().toString();  // jquery already loaded (whew)
-    // var index = all_html.indexOf( "JCB Info" );
-    var index = all_html.indexOf( 'class="jcb_link"' );
+    var index = all_html.indexOf( 'class="hay_link"' );
     if (index != -1) {
       console.log( "- aready run" );
     } else {
       console.log( "- not already run" );
-      check_page_type();
+      // check_page_type(); -- will re-enable when changed more to avoid conflict with jcb js code
     }
   }
 
@@ -65,35 +63,35 @@ var jcblink_flow_manager = new function() {
   }
 
   var check_location = function() {
-    /* Checks if any of the locations are JCB-relevant.
+    /* Checks if any of the locations are AnnexHay-relevant.
      * Called by check_page_type()
      */
     bib_items_entry_rows = document.querySelectorAll( ".bibItemsEntry" );
-    var jcb_found = search_location_rows();
-    if ( jcb_found == true ) {
-        console.log( "- JCB bib found; proceeding" );
+    var hay_found = search_location_rows();
+    if ( hay_found == true ) {
+        console.log( "- AnnexHay bib found; proceeding" );
         grab_bib();
     } else {
-        console.log( "- not jcb bib page; done" );
+        console.log( "- not AnnexHay bib page; done" );
     }
   }
 
   var search_location_rows = function() {
-    /* Iterates through the bibItemsEntry rows, looking for `JCB` locations.
+    /* Iterates through the bibItemsEntry rows, looking for `ANNEX HAY` locations.
      * Returns boolean.
      * Called by check_location()
      */
-    var jcb_found = false;
+    var hay_found = false;
     for( var i=0; i < bib_items_entry_rows.length; i++ ) {
         var row = bib_items_entry_rows[i];
         var josiah_location = row.children[0].textContent.trim();
         console.log( "- current josiah_location, `" + josiah_location + "`" );
-        if ( josiah_location.slice(0, 3) == "JCB" ) {
-            jcb_found = true;
+        if ( josiah_location.slice(0, 3) == "ANNEX HAY" ) {
+            hay_found = true;
             break;
         }
     }
-    return jcb_found;
+    return hay_found;
   }
 
   var grab_bib = function() {
@@ -198,28 +196,28 @@ var jcblink_flow_manager = new function() {
   }
 
   var process_rows = function() {
-    /* For each row, calls a `jcblink_row_processor` function to:
+    /* For each row, calls a `haylink_row_processor` function to:
      *   - grab the row's callnumber
-     *   - assemble the jcb link html & display it
+     *   - assemble the hay link html & display it
      * Called by grab_bib()
-     * Ends `jcblink_flow_manager` processing.
+     * Ends `haylink_flow_manager` processing.
      */
     for( var i=0; i < bib_items_entry_rows.length; i++ ) {
         var row = bib_items_entry_rows[i];
         console.log( '- calling row-processor' );
-        jcblink_row_processor.process_item( row, bibnum, title, author, publish_info, digital_version_url );
+        haylink_row_processor.process_item( row, bibnum, title, author, publish_info, digital_version_url );
     }
   }
 
-};  // end namespace jcblink_flow_manager, ```var jcblink_flow_manager = new function() {```
+};  // end namespace haylink_flow_manager, ```var haylink_flow_manager = new function() {```
 
 
-var jcblink_row_processor = new function() {
+var haylink_row_processor = new function() {
   /*
    * Class flow description:
-   *   - Determines whether to show a JCB-Request link
+   *   - Determines whether to show an `ANNEX HAY` Request link
    *   - If so, grabs callnumber
-   *   - Builds and displays JCB-Request link html
+   *   - Builds and displays `ANNEX HAY` Request link html
    */
 
   var local_row = null;
@@ -229,16 +227,16 @@ var jcblink_row_processor = new function() {
   var local_author = null;
   var local_publish_info = null;
   var local_digital_version_url = null;
-  var aeon_root_url = "https://jcbl.aeon.atlas-sys.com/aeon.dll?Action=10&Form=30";
+  var aeon_root_url = "https://hayl.aeon.atlas-sys.com/aeon.dll?Action=10&Form=30";
 
   this.process_item = function( row, bibnum, title, author, publish_info, digital_version_url ) {
     /* Processes each row.
-     * Called by jcblink_flow_manager.process_item_table()
+     * Called by haylink_flow_manager.process_item_table()
      */
     console.log( '- processing row' );
     init_processor( row, bibnum, title, author, publish_info, digital_version_url );
-    var jcb_found = check_row_location();
-    if ( jcb_found == true ) {
+    var hay_found = check_row_location();
+    if ( hay_found == true ) {
       grab_callnumber();
       build_url();
     }
@@ -257,18 +255,18 @@ var jcblink_row_processor = new function() {
   }
 
   var check_row_location = function() {
-    /* Checks for JCB location.
+    /* Checks for ANNEX HAY location.
      * Returns boolean.
      * Called by process_item()
      */
-    var jcb_found = false;
+    var hay_found = false;
     var josiah_location = local_row.children[0].textContent.trim();
     console.log( "- row josiah_location, `" + josiah_location + "`" );
-    if ( josiah_location.slice(0, 3) == "JCB" ) {
-        jcb_found = true;
+    if ( josiah_location.slice(0, 3) == "ANNEX HAY" ) {
+        hay_found = true;
     }
-    console.log( "- jcb_found, `" + jcb_found + "`" );
-    return jcb_found;
+    console.log( "- hay_found, `" + hay_found + "`" );
+    return hay_found;
   }
 
   var grab_callnumber = function() {
@@ -307,14 +305,14 @@ var jcblink_row_processor = new function() {
   var display_link = function( full_aeon_url ) {
     /* Displays link html.
      * Called by build_url()
-     * Ends `jcblink_row_processor` processing.
+     * Ends `haylink_row_processor` processing.
      */
     console.log( "- starting display_link()" );
     var td = local_row.children[0];
     var dashes = document.createTextNode( " -- " );
     var a = document.createElement( "a" );
     a.href = full_aeon_url;
-    a.setAttribute( "class", "jcb_link" );
+    a.setAttribute( "class", "hay_link" );
     var link_text = document.createTextNode( "Request" );
     a.appendChild( link_text );
     td.appendChild( dashes );
@@ -322,17 +320,17 @@ var jcblink_row_processor = new function() {
     console.log( "- request-scan link added" );
   }
 
-};  // end namespace jcblink_row_processor, ```var jcblink_row_processor = new function() {```
+};  // end namespace haylink_row_processor, ```var haylink_row_processor = new function() {```
 
 
 
 
 $(document).ready(
   function() {
-    console.log( "- jcb_link.js says document loaded" );
-    jcblink_flow_manager.check_already_run();
+    console.log( "- hay_link.js says document loaded" );
+    haylink_flow_manager.check_already_run();
   }
 );
 
 
-console.log( "- jcb_link.js END" );
+console.log( "- hay_link.js END" );

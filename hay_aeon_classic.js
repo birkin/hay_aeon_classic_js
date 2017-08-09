@@ -16,10 +16,10 @@ var haylink_flow_manager = new function() {
    *   - Displays Aeon link
    *
    * Reference Josiah pages:
-   * - `ANNEX HAY` - regular: <http://josiah.brown.edu/record=b7621213>
-   * - `ANNEX HAY` - multiple 'ANNEX HAY' copies: <http://josiah.brown.edu/record=b2223864>
-   * - `ANNEX HAY` - multiple copies, mixture of 'ANNEX HAY' and 'ROCK': <http://josiah.brown.edu/record=b1346992>
-   * - `ANNEX HAY` - very-long-title handling: <http://josiah.brown.edu/record=b1863472>
+   * - `HAY` - regular: <http://josiah.brown.edu/record=b7621213>
+   * - `HAY` - multiple 'HAY' copies: <http://josiah.brown.edu/record=b2223864>
+   * - `HAY` - multiple copies, mixture of 'HAY' and 'ROCK': <http://josiah.brown.edu/record=b1346992>
+   * - `HAY` - very-long-title handling: <http://josiah.brown.edu/record=b1863472>
    */
 
   /* set globals, essentially class attributes */
@@ -63,21 +63,21 @@ var haylink_flow_manager = new function() {
   }
 
   var check_location = function() {
-    /* Checks if any of the locations are AnnexHay-relevant.
+    /* Checks if any of the locations are Hay-relevant.
      * Called by check_page_type()
      */
     bib_items_entry_rows = document.querySelectorAll( ".bibItemsEntry" );
     var hay_found = search_location_rows();
     if ( hay_found == true ) {
-        console.log( "- AnnexHay bib found; proceeding" );
+        console.log( "- Hay bib found; proceeding" );
         grab_bib();
     } else {
-        console.log( "- not AnnexHay bib page; done" );
+        console.log( "- not Hay bib page; done" );
     }
   }
 
   var search_location_rows = function() {
-    /* Iterates through the bibItemsEntry rows, looking for `ANNEX HAY` locations.
+    /* Iterates through the bibItemsEntry rows, looking for `HAY` locations.
      * Returns boolean.
      * Called by check_location()
      */
@@ -86,7 +86,7 @@ var haylink_flow_manager = new function() {
         var row = bib_items_entry_rows[i];
         var josiah_location = row.children[0].textContent.trim();
         console.log( "- current josiah_location, `" + josiah_location + "`" );
-        if ( josiah_location.slice(0, 3) == "ANNEX HAY" ) {
+        if ( josiah_location.slice(0, 3) == "HAY" ) {
             hay_found = true;
             break;
         }
@@ -202,9 +202,9 @@ var haylink_flow_manager = new function() {
 var haylink_row_processor = new function() {
   /*
    * Class flow description:
-   *   - Determines whether to show an `ANNEX HAY` Request link
+   *   - Determines whether to show an `HAY` Request link
    *   - If so, grabs callnumber
-   *   - Builds and displays `ANNEX HAY` Request link html
+   *   - Builds and displays `HAY` Request link html
    */
 
   var local_row = null;
@@ -242,14 +242,14 @@ var haylink_row_processor = new function() {
   }
 
   var check_row_location = function() {
-    /* Checks for ANNEX HAY location.
+    /* Checks for HAY location.
      * Returns boolean.
      * Called by process_item()
      */
     var hay_found = false;
     var josiah_location = local_row.children[0].textContent.trim();
     console.log( "- row josiah_location, `" + josiah_location + "`" );
-    if ( josiah_location.slice(0, 3) == "ANNEX HAY" ) {
+    if ( josiah_location.slice(0, 3) == "HAY" ) {
         hay_found = true;
     }
     console.log( "- hay_found, `" + hay_found + "`" );

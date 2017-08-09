@@ -32,7 +32,7 @@ var haylink_flow_manager = new function() {
   var digital_version_url = "";
   var bib_items_entry_rows = null;
   var bib_items_entry_row = null;
-  // var aeon_root_url = "https://brown.aeon.atlas-sys.com/aeon.dll?Action=10&Form=30";
+  // var aeon_root_url = "https://brown.aeon.atlas-sys.com/logon/?Action=10&Form=30";
   var full_aeon_url = "";
 
   this.check_already_run = function() {
@@ -214,7 +214,7 @@ var haylink_row_processor = new function() {
   var local_author = null;
   var local_publish_info = null;
   var local_digital_version_url = null;
-  var aeon_root_url = "https://brown.aeon.atlas-sys.com/aeon.dll?Action=10&Form=30";
+  var aeon_root_url = "https://brown.aeon.atlas-sys.com/logon/?Action=10&Form=30";
 
   this.process_item = function( row, bibnum, title, author, publish_info, digital_version_url ) {
     /* Processes each row.

@@ -16,10 +16,10 @@ var haylink_flow_manager = new function() {
    *   - Displays Aeon link
    *
    * Reference Josiah pages:
-   * - `HAY` - regular: <http://josiah.brown.edu/record=b7621213>
-   * - `HAY` - multiple 'HAY' copies: <http://josiah.brown.edu/record=b2223864>
-   * - `HAY` - multiple copies, mixture of 'HAY' and 'ROCK': <http://josiah.brown.edu/record=b1346992>
-   * - `HAY` - very-long-title handling: <http://josiah.brown.edu/record=b1863472>
+   * - `HAY BROADSIDES` - regular: <http://josiah.brown.edu/record=b3326323>
+   * - `HAY BROADSIDES` - multiple 'HAY BROADSIDES' copies: <http://josiah.brown.edu/record=b3000585>
+   * - `HAY STAR & HAY LINCOLN` - multiple copies, mixture of two: <http://josiah.brown.edu/record=b1870356>
+   * - `HAY STAR` - very-long-title handling: <http://josiah.brown.edu/record=b1001443>
    */
 
   /* set globals, essentially class attributes */

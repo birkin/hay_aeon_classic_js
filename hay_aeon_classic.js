@@ -32,7 +32,7 @@ var haylink_flow_manager = new function() {
   var digital_version_url = "";
   var bib_items_entry_rows = null;
   var bib_items_entry_row = null;
-  // var aeon_root_url = "https://hayl.aeon.atlas-sys.com/aeon.dll?Action=10&Form=30";
+  // var aeon_root_url = "https://brown.aeon.atlas-sys.com/aeon.dll?Action=10&Form=30";
   var full_aeon_url = "";
 
   this.check_already_run = function() {
@@ -45,7 +45,7 @@ var haylink_flow_manager = new function() {
       console.log( "- aready run" );
     } else {
       console.log( "- not already run" );
-      // check_page_type(); -- will re-enable when changed more to avoid conflict with jcb js code
+      check_page_type(); -- will re-enable when changed more to avoid conflict with jcb js code
     }
   }
 
@@ -122,19 +122,6 @@ var haylink_flow_manager = new function() {
     check_online_link();
     process_rows();
   }
-
-  // var grab_title = function( label ) {
-  //   /* Sets class title attribute.
-  //    * Called by grab_bib_info()
-  //    */
-  //   if ( title == "" ) {
-  //     var label_text = label.textContent.trim();
-  //     if ( label_text == "Title" ) {
-  //       title = label.nextElementSibling.textContent.trim();
-  //       console.log( "- title, " + title );
-  //     }
-  //   }
-  // }
 
   var grab_title = function( label ) {
     /* Sets class title attribute, truncated to avoid errors with loooong titles.
@@ -227,7 +214,7 @@ var haylink_row_processor = new function() {
   var local_author = null;
   var local_publish_info = null;
   var local_digital_version_url = null;
-  var aeon_root_url = "https://hayl.aeon.atlas-sys.com/aeon.dll?Action=10&Form=30";
+  var aeon_root_url = "https://brown.aeon.atlas-sys.com/aeon.dll?Action=10&Form=30";
 
   this.process_item = function( row, bibnum, title, author, publish_info, digital_version_url ) {
     /* Processes each row.

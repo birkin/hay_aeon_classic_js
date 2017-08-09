@@ -45,7 +45,7 @@ var haylink_flow_manager = new function() {
       console.log( "- aready run" );
     } else {
       console.log( "- not already run" );
-      check_page_type(); -- will re-enable when changed more to avoid conflict with jcb js code
+      check_page_type();
     }
   }
 

@@ -36,7 +36,7 @@ class HayAeonlinkTest( unittest.TestCase ):
     def test_HAY_BROADSIDES_single_result( self ):
         """ Checks for link and link param-values for `HAY BROADSIDES` location. """
         driver = self.driver
-        driver.get(self.base_url + "/record=b3326323")
+        driver.get( self.base_url + '/record=b3326323' )
         ## check for single request link on page
         request_link_elements = driver.find_elements_by_link_text( 'Request' )
         self.assertEqual( 1, len(request_link_elements) )
@@ -90,7 +90,7 @@ class HayAeonlinkTest( unittest.TestCase ):
             ['b1001443'],
             q_dct['ReferenceNumber'] )
         self.assertEqual(
-            ["Thomas Jefferson offers his library to the Congress. A facsimile of the original letter in the University of Chicago Library, issued on the occasion of the dedication of the Joseph Regenstein Libra..."],
+            ['Thomas Jefferson offers his library to the Congress. A facsimile of the original letter in the University of Chicago Library, issued on the occasion of the dedication of the Joseph Regenstein Libra...'],
             q_dct['ItemTitle'] )
         self.assertEqual(
             ['Jefferson, Thomas, 1743-1826'],
@@ -109,8 +109,8 @@ class HayAeonlinkTest( unittest.TestCase ):
     #     """ Checks for link and link param-values for HAY_X location but where item has digital online version.
     #         This test is commented out because it's really a JCB test that could be repurposed if an appropriate Hay item surfaces. """
     #     driver = self.driver
-    #     driver.get(self.base_url + "/record=b2225840~S6")
-    #     driver.find_element_by_link_text("Request").click()
+    #     driver.get( self.base_url + '/record=b2225840~S6' )
+    #     driver.find_element_by_link_text( 'Request' ).click()
     #     self.assertTrue( 'aeon' in driver.current_url )
     #     self.assertTrue( 'ReferenceNumber=b2225840' in driver.current_url )
     #     self.assertTrue( 'ItemTitle=Argonautica' in driver.current_url )
@@ -123,6 +123,6 @@ class HayAeonlinkTest( unittest.TestCase ):
     ## end class HayAeonlinkTest
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     runner = unittest.TextTestRunner()
     unittest.main( verbosity=2, warnings='ignore' )  # python3; warnings='ignore' from <http://stackoverflow.com/a/21500796>

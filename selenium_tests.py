@@ -1,32 +1,40 @@
 # -*- coding: utf-8 -*-
 
+""" python3 tests for classic-josiah hay/aeon links
+
+    Usage: $ python ./selenium_tests.py  # all tests
+           $ $ python ./selenium_tests.py HayAeonlinkTest.test_very_long_title  # specific test
+
+    Note: according to B.B., there is no plain 'HAY' location for an item.
+    That's a bib-level location; all hay items should have a more specific location. """
+
 import os, pprint, re, time, unittest
 from urllib.parse import parse_qs, urlparse
 
 from selenium import webdriver
 
 
-class JCBlinkTest( unittest.TestCase ):
-    """ Tests javascript-created JCB-Aeon links. """
+class HayAeonlinkTest( unittest.TestCase ):
+    """ Tests javascript-created Hay-Aeon links. """
 
     def setUp(self):
         self.driver = None
-        driver_type = os.environ.get( 'JCBLINK_TESTS__DRIVER_TYPE', 'firefox' )
+        driver_type = os.environ.get( 'HAYLINK_TESTS__DRIVER_TYPE', 'firefox' )
         if driver_type == 'firefox':
             self.driver = webdriver.Firefox()
         else:
             self.driver = webdriver.PhantomJS( '%s' % driver_type )  # will be path to phantomjs
         self.driver.implicitly_wait( 30 )
-        # self.base_url = unicode( os.environ.get('JCBLINK_TESTS__BASE_URL') )
-        self.base_url = 'http://josiah.brown.edu:2082'
+        self.base_url = os.environ.get( 'HAYLINK_TESTS__BASE_URL', 'http://josiah.brown.edu:2082' )
+        print( 'base_url, ```%s```' % self.base_url )
 
     def tearDown(self):
         self.driver.quit()
 
     ## tests
 
-    def test_JCB_plain( self ):
-        """ Checks for link and link param-values for plain JCB location. """
+    def test_HAY_BROADSIDES( self ):
+        """ Checks for link and link param-values for `HAY BROADSIDES` location. """
         driver = self.driver
         driver.get(self.base_url + "/record=b3902979~S6")
         driver.find_element_by_link_text("Request").click()
@@ -39,79 +47,55 @@ class JCBlinkTest( unittest.TestCase ):
         # self.assertTrue( 'Notes=(bibnum%3A%20b3902979)' in driver.current_url )
         self.assertEqual( 'ItemInfo2=', driver.current_url[-10:] )
 
-    def test_JCB_plain_with_digital_version( self ):
-        """ Checks for link and link param-values for plain JCB location but where item has digital online version. """
-        driver = self.driver
-        driver.get(self.base_url + "/record=b2225840~S6")
-        driver.find_element_by_link_text("Request").click()
-        self.assertTrue( 'aeon' in driver.current_url )
-        self.assertTrue( 'ReferenceNumber=b2225840' in driver.current_url )
-        self.assertTrue( 'ItemTitle=Argonautica' in driver.current_url )
-        self.assertTrue( 'ItemAuthor=Usselincx' in driver.current_url )
-        self.assertTrue( 'ItemPublisher=Gedruckt' in driver.current_url )
-        self.assertTrue( 'CallNumber=1-SIZE' in driver.current_url )
-        # self.assertTrue( 'Notes=(bibnum%3A%20b2225840)' in driver.current_url )
-        self.assertTrue( 'ItemInfo2=https' in driver.current_url )
+    # def test__HAY_X_with_digital_version( self ):
+    #     """ Checks for link and link param-values for HAY_X location but where item has digital online version.
+    #         This test is commented out because it's really a JCB test that could be repurposed if an appropriate Hay item surfaces. """
+    #     driver = self.driver
+    #     driver.get(self.base_url + "/record=b2225840~S6")
+    #     driver.find_element_by_link_text("Request").click()
+    #     self.assertTrue( 'aeon' in driver.current_url )
+    #     self.assertTrue( 'ReferenceNumber=b2225840' in driver.current_url )
+    #     self.assertTrue( 'ItemTitle=Argonautica' in driver.current_url )
+    #     self.assertTrue( 'ItemAuthor=Usselincx' in driver.current_url )
+    #     self.assertTrue( 'ItemPublisher=Gedruckt' in driver.current_url )
+    #     self.assertTrue( 'CallNumber=1-SIZE' in driver.current_url )
+    #     # self.assertTrue( 'Notes=(bibnum%3A%20b2225840)' in driver.current_url )
+    #     self.assertTrue( 'ItemInfo2=https' in driver.current_url )
 
-    def test_JCB_REF( self ):
-        """ Checks for link and link param-values for JCB-REF location. """
-        driver = self.driver
-        driver.get(self.base_url + "/record=b6344512~S6")
-        driver.find_element_by_link_text("Request").click()
-        self.assertTrue( 'aeon' in driver.current_url )
-        self.assertTrue( 'ReferenceNumber=b6344512' in driver.current_url )
-        self.assertTrue( 'ItemTitle=The%20papers' in driver.current_url )
-        self.assertTrue( 'ItemAuthor=Jefferson%2C%20Thomas' in driver.current_url )
-        self.assertTrue( 'ItemPublisher=Princeton' in driver.current_url )
-        self.assertTrue( 'CallNumber=E302' in driver.current_url )
-        # self.assertTrue( 'Notes=(bibnum%3A%20b6344512)' in driver.current_url )
         self.assertEqual( 'ItemInfo2=', driver.current_url[-10:] )
 
-    def test_JCB_VISUAL_MATERIALS( self ):
-        """ Checks for link and link param-values for JCB-VISUAL-MATERIALS location. """
+    def test_HAY_STARR_very_long_title( self ):
+        """ Checks link prepared for item with very long title which should be truncated.
+            If the full url to Aeon is too long, the handoff to Aeon will fail. """
         driver = self.driver
-        driver.get(self.base_url + "/record=b5660654~S6")
-        driver.find_element_by_link_text("Request").click()
-        self.assertTrue( 'aeon' in driver.current_url )
-        self.assertTrue( 'ReferenceNumber=b5660654' in driver.current_url )
-        self.assertTrue( 'ItemTitle=Thomas%20Jefferson' in driver.current_url )
-        self.assertTrue( 'ItemAuthor=&ItemPublisher' in driver.current_url )
-        self.assertTrue( 'ItemPublisher=Princeton' in driver.current_url )
-        self.assertTrue( 'CallNumber=VHS' in driver.current_url )
-        # self.assertTrue( 'Notes=(bibnum%3A%20b5660654)' in driver.current_url )
-        self.assertEqual( 'ItemInfo2=', driver.current_url[-10:] )
-
-    def test_very_long_title( self ):
-        """ Checks link prepared for item with very long title which should be truncated. """
-        driver = self.driver
-        driver.get(self.base_url + "/record=b5713050~S6")
+        driver.get(self.base_url + "/record=b1001443")
         driver.find_element_by_link_text("Request").click()
         url_obj = urlparse( driver.current_url )
         q_dct = parse_qs( driver.current_url )
-        # print( 'q_dct, ```%s```' % pprint.pformat(q_dct) )
+        print( 'q_dct, ```%s```' % pprint.pformat(q_dct) )
         self.assertEqual(
-            'jcbl.aeon.atlas-sys.com',
+            'brown.aeon.atlas-sys.com',
             url_obj.netloc )
         self.assertEqual(
-            ['b5713050'],
+            ['b1001443'],
             q_dct['ReferenceNumber'] )
         self.assertEqual(
-            ["The English-American his travail by sea and land: or, A new survey of the West-India's [sic], : containing a journall of three thousand and three hundred miles within the main land of America. Wher..."],
+            ["Thomas Jefferson offers his library to the Congress. A facsimile of the original letter in the University of Chicago Library, issued on the occasion of the dedication of the Joseph Regenstein Libra..."],
             q_dct['ItemTitle'] )
         self.assertEqual(
-            ['Gage, Thomas, 1603?-1656'],
+            ['Jefferson, Thomas, 1743-1826'],
             q_dct['ItemAuthor'] )
         self.assertEqual(
-            ['London : printed by R. Cotes, and are to be sold by Humphrey Blunden at the Castle in Cornhill, and Thomas Williams at the Bible in Little Britain, 1648'],
+            ['[Chicago, 1970]'],
             q_dct['ItemPublisher'] )
         self.assertEqual(
-            ['1-SIZE D648 .G133e'],
+            ['1-SIZE Z733.U57 J4 1812a'],
             q_dct['CallNumber'] )
         self.assertEqual(
-            ['http://www.archive.org/details/englishamericanh00gage'],
-            q_dct['ItemInfo2'] )
+            None,
+            q_dct.get('ItemInfo2', None) )
 
-    # end class JCBlinkTest
+    # end class HayAeonlinkTest
 
 
 if __name__ == "__main__":

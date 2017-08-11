@@ -107,16 +107,16 @@ class HayAeonlinkTest( unittest.TestCase ):
 
     ## exclusion tests (no 'Request' link should appear)
 
-    def test_HAY_MILITARY_multiple_results( self ):
-        """ Checks that no Aeon 'Request' button exists for excluded `HAY MILITARY` location. """
+    def test_HAY_MANUSCRIPTS_multiple_results( self ):
+        """ Checks that no Aeon 'Request' button exists for excluded `HAY MANUSCRIPTS` location. """
         driver = self.driver
-        driver.get( self.base_url + '/record=b2394804' )
+        driver.get( self.base_url + '/record=b3589814' )
         ## confirm multiple Hay links exist
-        request_link_elements = driver.find_elements_by_link_text( 'HAY MILITARY' )
-        self.assertEqual( 9, len(request_link_elements) )
+        request_link_elements = driver.find_elements_by_link_text( 'HAY MANUSCRIPTS' )
+        self.assertEqual( 10, len(request_link_elements) )
         ## check for single request link on page
         request_link_elements = driver.find_elements_by_link_text( 'Request' )
-        self.assertEqual( 1, len(request_link_elements) )
+        self.assertEqual( 0, len(request_link_elements) )
 
     # def test__HAY_X_with_digital_version( self ):
     #     """ Checks for link and link param-values for HAY_X location but where item has digital online version.

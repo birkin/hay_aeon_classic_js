@@ -95,12 +95,13 @@ var haylink_flow_manager = new function() {
   // }
 
   var search_location_rows = function() {
-    /* Iterates through the bibItemsEntry rows, looking for `HAY` locations.
+    /* Iterates through the bibItemsEntry rows, looking for valid HAY locations.
      * Returns boolean.
      * Called by check_location()
      */
     var hay_found = false;
     var non_aeon_locations = [
+        "HAY ANNEX TEMP",
         "HAY ARCHIVES MANUSCRIPTS",
         "HAY COURSE RESERVES",
         "HAY MANUSCRIPTS"

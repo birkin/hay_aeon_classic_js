@@ -115,6 +115,7 @@ class HayAeonlinkTest( unittest.TestCase ):
         request_link_elements = driver.find_elements_by_link_text( 'HAY MANUSCRIPTS' )
         self.assertEqual( 10, len(request_link_elements) )
         ## check for single request link on page
+        driver.implicitly_wait( 3 )  # seconds
         request_link_elements = driver.find_elements_by_link_text( 'Request' )
         self.assertEqual( 0, len(request_link_elements) )
 

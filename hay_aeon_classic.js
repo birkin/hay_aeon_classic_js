@@ -101,16 +101,9 @@ var haylink_flow_manager = new function() {
      */
     var hay_found = false;
     var non_aeon_locations = [
-        "HAY ANNEX TEMP",
-        "HAY ARCHIVES",
-        "HAY ARCHIVES CASSETTE",
-        "HAY ARCHIVES CD",
-        "HAY ARCHIVES DVD",
         "HAY ARCHIVES MANUSCRIPTS",
-        "HAY ARCHIVES THESES",
-        "HAY HAWKINS",
-        "HAY MANUSCRIPTS",
-        "HAY OFF SITE"
+        "HAY COURSE RESERVES",
+        "HAY MANUSCRIPTS"
         ];
     for( var i=0; i < bib_items_entry_rows.length; i++ ) {
         var row = bib_items_entry_rows[i];

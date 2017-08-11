@@ -76,17 +76,47 @@ var haylink_flow_manager = new function() {
     }
   }
 
+  // var search_location_rows = function() {
+  //   /* Iterates through the bibItemsEntry rows, looking for `HAY` locations.
+  //    * Returns boolean.
+  //    * Called by check_location()
+  //    */
+  //   var hay_found = false;
+  //   for( var i=0; i < bib_items_entry_rows.length; i++ ) {
+  //       var row = bib_items_entry_rows[i];
+  //       var josiah_location = row.children[0].textContent.trim();
+  //       console.log( "- current josiah_location, `" + josiah_location + "`" );
+  //       if ( josiah_location.slice(0, 3) == "HAY" ) {
+  //           hay_found = true;
+  //           break;
+  //       }
+  //   }
+  //   return hay_found;
+  // }
+
   var search_location_rows = function() {
     /* Iterates through the bibItemsEntry rows, looking for `HAY` locations.
      * Returns boolean.
      * Called by check_location()
      */
     var hay_found = false;
+    var non_aeon_locations = [
+        "HAY ANNEX TEMP",
+        "HAY ARCHIVES",
+        "HAY ARCHIVES CASSETTE",
+        "HAY ARCHIVES CD",
+        "HAY ARCHIVES DVD",
+        "HAY ARCHIVES MANUSCRIPTS",
+        "HAY ARCHIVES THESES",
+        "HAY HAWKINS",
+        "HAY MANUSCRIPTS",
+        "HAY OFF SITE"
+        ];
     for( var i=0; i < bib_items_entry_rows.length; i++ ) {
         var row = bib_items_entry_rows[i];
         var josiah_location = row.children[0].textContent.trim();
         console.log( "- current josiah_location, `" + josiah_location + "`" );
-        if ( josiah_location.slice(0, 3) == "HAY" ) {
+        if ( josiah_location.slice(0, 3) == "HAY" ) and ( non_aeon_locations.indexOf(josiah_location) != -1 ) {
             hay_found = true;
             break;
         }

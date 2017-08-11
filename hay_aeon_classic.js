@@ -109,9 +109,15 @@ var haylink_flow_manager = new function() {
         var row = bib_items_entry_rows[i];
         var josiah_location = row.children[0].textContent.trim();
         console.log( "- current josiah_location, `" + josiah_location + "`" );
-        if ( (josiah_location.slice(0, 3) == "HAY") && (non_aeon_locations.indexOf(josiah_location) != -1) ) {
-            hay_found = true;
-            break;
+        if ( josiah_location.slice(0, 3) == "HAY" ){
+            console.log( "- seeing HAY slice" );
+            var index_of_val = non_aeon_locations.indexOf( josiah_location );
+            console.log( "- indexOf(josiah_location) was `" + index_of_val + "`" );
+            if ( index_of_val != -1 ) {
+                console.log( "- hay_found is `true`" );
+                hay_found = true;
+                break;
+            }
         }
     }
     return hay_found;

@@ -113,7 +113,7 @@ var haylink_flow_manager = new function() {
             console.log( "- seeing HAY slice" );
             var index_of_val = non_aeon_locations.indexOf( josiah_location );
             console.log( "- indexOf(josiah_location) was `" + index_of_val + "`" );
-            if ( index_of_val != -1 ) {
+            if ( index_of_val > -1 ) {
                 console.log( "- hay_found is `true`" );
                 hay_found = true;
                 break;

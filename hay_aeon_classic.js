@@ -76,36 +76,6 @@ var haylink_flow_manager = new function() {
     }
   }
 
-  // var search_location_rows = function() {
-  //   /* Iterates through the bibItemsEntry rows, looking for valid HAY locations.
-  //    * Returns boolean.
-  //    * Called by check_location()
-  //    */
-  //   var hay_found = false;
-  //   var non_aeon_locations = [
-  //       "HAY ANNEX TEMP",
-  //       "HAY ARCHIVES MANUSCRIPTS",
-  //       "HAY COURSE RESERVES",
-  //       "HAY MANUSCRIPTS"
-  //       ];
-  //   for( var i=0; i < bib_items_entry_rows.length; i++ ) {
-  //       var row = bib_items_entry_rows[i];
-  //       var josiah_location = row.children[0].textContent.trim();
-  //       console.log( "- current josiah_location, `" + josiah_location + "`" );
-  //       if ( josiah_location.slice(0, 3) == "HAY" ){
-  //           console.log( "- seeing HAY slice" );
-  //           var index_of_val = non_aeon_locations.indexOf( josiah_location );
-  //           console.log( "- indexOf(josiah_location) was `" + index_of_val + "`" );
-  //           if ( index_of_val == -1 ) {
-  //               console.log( "- hay_found is `true`" );
-  //               hay_found = true;
-  //               break;
-  //           }
-  //       }
-  //   }
-  //   return hay_found;
-  // }
-
   var search_location_rows = function() {
     /* Iterates through the bibItemsEntry rows, looking for valid HAY locations.
      * Returns boolean.

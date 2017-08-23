@@ -202,6 +202,20 @@ var haylink_flow_manager = new function() {
     console.log( "- digital_version_url, " + digital_version_url );
   }
 
+  // var process_rows = function() {
+  //   /* For each row, calls a `haylink_row_processor` function to:
+  //    *   - grab the row's callnumber
+  //    *   - assemble the hay link html & display it
+  //    * Called by grab_bib()
+  //    * Ends `haylink_flow_manager` processing.
+  //    */
+  //   for( var i=0; i < bib_items_entry_rows.length; i++ ) {
+  //       var row = bib_items_entry_rows[i];
+  //       console.log( '- calling row-processor' );
+  //       haylink_row_processor.process_item( row, bibnum, title, author, publish_info, digital_version_url );
+  //   }
+  // }
+
   var process_rows = function() {
     /* For each row, calls a `haylink_row_processor` function to:
      *   - grab the row's callnumber
@@ -211,6 +225,8 @@ var haylink_flow_manager = new function() {
      */
     for( var i=0; i < bib_items_entry_rows.length; i++ ) {
         var row = bib_items_entry_rows[i];
+        var josiah_location = row.children[0].textContent.trim();
+        console.log( "- josiah_location, ```" + josiah_location + "```" );
         console.log( '- calling row-processor' );
         haylink_row_processor.process_item( row, bibnum, title, author, publish_info, digital_version_url );
     }

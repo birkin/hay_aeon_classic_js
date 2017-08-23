@@ -225,8 +225,8 @@ var haylink_flow_manager = new function() {
      */
     for( var i=0; i < bib_items_entry_rows.length; i++ ) {
         var row = bib_items_entry_rows[i];
-        var josiah_location = row.children[0].textContent.trim();
-        console.log( "- josiah_location, ```" + josiah_location + "```" );
+        // var josiah_location = row.children[0].textContent.trim();
+        // console.log( "- josiah_location, ```" + josiah_location + "```" );
         console.log( '- calling row-processor' );
         haylink_row_processor.process_item( row, bibnum, title, author, publish_info, digital_version_url );
     }
@@ -244,6 +244,7 @@ var haylink_row_processor = new function() {
    */
 
   var local_row = null;
+  var local_location = null;
   var callnumber = null;
   var bibnum = null;
   var local_title = null;
@@ -254,7 +255,7 @@ var haylink_row_processor = new function() {
 
   this.process_item = function( row, bibnum, title, author, publish_info, digital_version_url ) {
     /* Processes each row.
-     * Called by haylink_flow_manager.process_item_table()
+     * Called by haylink_flow_manager.process_rows()
      */
     console.log( '- processing row' );
     init_processor( row, bibnum, title, author, publish_info, digital_version_url );
@@ -283,9 +284,10 @@ var haylink_row_processor = new function() {
      * Called by process_item()
      */
     var hay_found = false;
-    var josiah_location = local_row.children[0].textContent.trim();
-    console.log( "- row josiah_location, `" + josiah_location + "`" );
-    if ( josiah_location.slice(0, 3) == "HAY" ) {
+    // var josiah_location = local_row.children[0].textContent.trim();
+    local_location = local_row.children[0].textContent.trim();
+    console.log( "- row local_location, `" + local_location + "`" );
+    if ( local_location.slice(0, 3) == "HAY" ) {
         hay_found = true;
     }
     console.log( "- hay_found, `" + hay_found + "`" );
@@ -319,6 +321,7 @@ var haylink_row_processor = new function() {
       "&ItemAuthor=" + encodeURIComponent( local_author ) +
       "&ItemPublisher=" + encodeURIComponent( local_publish_info ) +
       "&CallNumber=" + encodeURIComponent( callnumber ) +
+      "&Location=" + encodeURIComponent( local_location ) +
       "&ItemInfo2=" + encodeURIComponent( local_digital_version_url )
       ;
     console.log( "- full_aeon_url, " + full_aeon_url );

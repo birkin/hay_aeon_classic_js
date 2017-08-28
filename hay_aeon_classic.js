@@ -82,8 +82,8 @@ var haylink_flow_manager = new function() {
      * Called by check_location()
      */
     var hay_found = false;
-    var non_aeon_locations = [
-      "HAY ANNEX TEMP", "HAY ARCHIVES MANUSCRIPTS", "HAY COURSE RESERVES", "HAY MANUSCRIPTS" ];
+    // var non_aeon_locations = [
+    //   "HAY ANNEX TEMP", "HAY ARCHIVES MANUSCRIPTS", "HAY COURSE RESERVES", "HAY MANUSCRIPTS" ];
     for( var i=0; i < bib_items_entry_rows.length; i++ ) {
       row = bib_items_entry_rows[i];
       if ( check_hay( row, non_aeon_locations ) == true ) {

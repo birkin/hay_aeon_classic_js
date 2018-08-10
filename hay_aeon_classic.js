@@ -288,9 +288,23 @@ var haylink_row_processor = new function() {
     // var josiah_location = local_row.children[0].textContent.trim();
     local_location = local_row.children[0].textContent.trim();
     console.log( "- row local_location, `" + local_location + "`" );
-    if ( local_location.slice(0, 3) == "HAY" ) {
+
+
+    // if ( local_location.slice(0, 3) == "HAY" ) {
+    //     hay_found = true;
+    // }
+
+
+    if ( local_location.slice(0, 3) == "HAY" ){
+      console.log( "- seeing HAY slice in row-processing" );
+      var index_of_val = hay_aeon_exclusions.indexOf( local_location );  // `hay_aeon_exclusions` is a global var available to all page js scripts, from `https://github.com/Brown-University-Library/hay_aeon_exclusions`
+      console.log( "- indexOf(local_location) was `" + index_of_val + "`" );
+      if ( index_of_val == -1 ) {
         hay_found = true;
+      }
     }
+
+
     console.log( "- hay_found, `" + hay_found + "`" );
     return hay_found;
   }
